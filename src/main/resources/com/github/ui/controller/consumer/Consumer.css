@@ -1,0 +1,99 @@
+.paneLeft {
+	-fx-background-color: #f29100;
+	-fx-background-radius: 10;
+	-fx-opacity: 0.675;
+}
+
+.separator *.line {
+	-fx-border-style: solid;
+	-fx-border-width: 0 0 2 0; /* its make really one-pixel-border */
+	-fx-border-color: white;
+}
+
+.paneLeft Label {
+	-fx-font-family: "Lucida Sans";
+	-fx-text-fill: #fff;
+}
+
+.paneLeft JFXButton, JFXRadioButton {
+	-fx-cursor: hand;
+}
+
+.upperLabel {
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
+}
+
+.upperLabelDown {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.paneLeftInside {
+	-fx-border-color: #fff;
+	-fx-border-radius: 15;
+	-fx-border-width: 2;
+	-fx-font-size: 12px;
+}
+
+#labelInfo {
+	-fx-text-fill: #ffffff;
+}
+
+.icon:hover {
+	-fx-fill: #37BAED;
+	-fx-cursor: hand;
+}
+
+.jfx-radio-button {
+    -jfx-selected-color: #fff;
+    -jfx-unselected-color: #fff;
+    -fx-text-fill: #fff;
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 12px;
+}
+
+.chart-bar:hover {
+	-fx-cursor: hand;
+	-fx-opacity: 0.7;
+	-fx-bar-fill: #37BAED;
+}
+
+.chart-bar {
+	-fx-bar-fill: #333;
+}
+
+.paneInfo {
+	-fx-background-color: #f29100;
+	-fx-background-radius: 5;
+	-fx-opacity: 0.675;
+}
+
+.paneInfo Label {
+	-fx-text-fill: #fff;
+	-fx-font-size: 13pt;
+	-fx-font-family: "Lucida Sans";
+}
+
+.paneInfoBottom {
+	-fx-font-size: 9pt;
+}
+
+.chart-plot-background {
+	-fx-background-color: transparent;
+}
+
+.labelChart {
+	-fx-tick-label-fill: #fff;
+	-fx-tick-label-font-size: 0.8em;
+}
+
+.sendButton {
+    -fx-background-color: #4a4a4a;
+    -fx-background-radius: 5;
+}
+
+.sendButton:hover {
+	-fx-background-color: #7a7878;
+	-fx-cursor: hand;
+}

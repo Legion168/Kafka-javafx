@@ -1,0 +1,63 @@
+.mainPane {
+    -fx-background-image: url("/images/bg.jpg");
+    -fx-background-size: stretch;
+}
+
+.generalLeftButton {
+    -fx-background-color: #f29100;
+    -fx-background-radius: 5;
+    -fx-opacity: 0.8;
+}
+
+.generalLeftButton Label {
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.generalLeftButton:hover Label {
+    -fx-text-fill: #4a4a4a;
+    -fx-cursor: hand;
+}
+
+.generalLeftButton:hover MaterialIconView {
+    -fx-fill: #4a4a4a;
+    -fx-cursor: hand;
+}
+
+.generalUpButton Label {
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 13pt;
+}
+
+.generalUpButton:hover {
+    -fx-border-color: #edaa37;
+    -fx-border-width: 0 0 3 0;
+    -fx-cursor: hand;
+}
+.generalUpButton:hover Label {
+    -fx-text-fill: #edaa37;
+    -fx-font-size: 13pt;
+}
+
+#close_pane:hover {
+    -fx-background-color: #dd654d;
+    -fx-cursor: hand;
+}
+
+#full_pane:hover {
+    -fx-background-color: #edaa37;
+    -fx-cursor: hand;
+}
+
+#down_pane:hover {
+    -fx-background-color: #edaa37;
+    -fx-cursor: hand;
+}
+
+#nameTab {
+    -fx-font-weight: bold;
+}
+
+
+

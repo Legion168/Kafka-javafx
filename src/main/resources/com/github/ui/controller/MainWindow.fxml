@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" styleClass="mainPane" stylesheets="@MainWindow.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ui.controller.MainWindow">
+   <top>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="94.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane layoutX="87.0" prefHeight="94.0" prefWidth="258.0" AnchorPane.leftAnchor="0.0">
+               <children>
+                  <ImageView fx:id="logo" fitHeight="63.0" fitWidth="234.0" layoutX="22.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../images/Logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="1500.8" prefHeight="26.0" prefWidth="99.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Pane id="close_pane" layoutX="73.0" layoutY="2.0" onMouseClicked="#handleExit" prefHeight="24.0" prefWidth="33.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <MaterialIconView fill="#4a4a4a" glyphName="CLOSE" layoutX="6.0" layoutY="21.0" onMouseClicked="#handleExit" size="20" />
+                     </children>
+                  </Pane>
+                  <Pane id="full_pane" layoutX="36.0" layoutY="2.0" prefHeight="24.0" prefWidth="33.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <MaterialIconView fill="#4a4a4a" glyphName="FULLSCREEN" layoutX="6.0" layoutY="21.0" size="20" text="" />
+                     </children>
+                  </Pane>
+                  <Pane id="down_pane" layoutY="2.0" prefHeight="24.0" prefWidth="33.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <MaterialIconView fill="#4a4a4a" glyphName="REMOVE" layoutX="6.0" layoutY="21.0" size="20" text="" />
+                     </children>
+                  </Pane>
+               </children>
+            </AnchorPane>
+            <Label id="nameTab" fx:id="titleSection" layoutX="275.0" layoutY="35.0" prefHeight="48.0" prefWidth="358.0" text="Dashboard" textFill="#4a4a4a" AnchorPane.leftAnchor="275.0">
+               <font>
+                  <Font name="Lucida Sans Regular" size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+            <Pane layoutX="1302.0" layoutY="38.0" prefHeight="56.0" prefWidth="96.0" styleClass="generalUpButton" AnchorPane.rightAnchor="200.0">
+               <children>
+                  <Label alignment="CENTER" layoutY="9.0" prefHeight="25.0" prefWidth="96.0" text="Account" textAlignment="CENTER" textFill="#4a4a4a">
+                     <font>
+                        <Font name="Lucida Sans Regular" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="1398.0" layoutY="39.0" prefHeight="56.0" prefWidth="96.0" styleClass="generalUpButton" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="100.0">
+               <children>
+                  <Label alignment="CENTER" layoutY="9.0" prefHeight="25.0" prefWidth="96.0" text="Logout" textAlignment="CENTER" textFill="#4a4a4a">
+                     <font>
+                        <Font name="Lucida Sans Regular" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </top>
+   <left>
+      <AnchorPane prefHeight="730.0" prefWidth="258.0" style="-fx-opacity: .75;" BorderPane.alignment="CENTER">
+         <children>
+            <Pane layoutX="32.0" layoutY="14.0" onMouseClicked="#handleDashboard" prefHeight="50.0" prefWidth="225.0" styleClass="generalLeftButton">
+               <children>
+                  <Label alignment="CENTER" layoutX="-1.0" prefHeight="50.0" prefWidth="227.0" text="DASHBOARD" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Sans Demibold" size="15.0" />
+                     </font>
+                  </Label>
+                  <MaterialIconView fill="WHITE" glyphName="DASHBOARD" layoutX="20.0" layoutY="35.0" size="20" />
+               </children>
+            </Pane>
+            <Pane layoutX="32.0" layoutY="78.0" onMouseClicked="#handleConsumer" prefHeight="50.0" prefWidth="225.0" styleClass="generalLeftButton">
+               <children>
+                  <Label alignment="CENTER" layoutX="-1.0" prefHeight="50.0" prefWidth="227.0" text="CONSUMER" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Sans Demibold" size="15.0" />
+                     </font>
+                  </Label>
+                  <MaterialIconView fill="WHITE" glyphName="QUESTION_ANSWER" layoutX="20.0" layoutY="35.0" size="20" />
+               </children>
+            </Pane>
+            <Pane layoutX="32.0" layoutY="142.0" onMouseClicked="#handleProducer" prefHeight="50.0" prefWidth="225.0" styleClass="generalLeftButton">
+               <children>
+                  <Label alignment="CENTER" layoutX="-1.0" prefHeight="50.0" prefWidth="227.0" text="PRODUCER" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Sans Demibold" size="15.0" />
+                     </font>
+                  </Label>
+                  <MaterialIconView fill="WHITE" glyphName="FITNESS_CENTER" layoutX="20.0" layoutY="35.0" size="20" text="" />
+               </children>
+            </Pane>
+            <Pane layoutX="32.0" layoutY="206.0" onMouseClicked="#handleClient" prefHeight="50.0" prefWidth="225.0" styleClass="generalLeftButton">
+               <children>
+                  <Label alignment="CENTER" layoutX="-1.0" prefHeight="50.0" prefWidth="227.0" text="CLIENT" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Sans Demibold" size="15.0" />
+                     </font>
+                  </Label>
+                  <MaterialIconView fill="WHITE" glyphName="VERIFIED_USER" layoutX="20.0" layoutY="35.0" size="20" />
+               </children>
+            </Pane>
+            <Pane layoutX="32.0" layoutY="270.0" onMouseClicked="#handleManage" prefHeight="50.0" prefWidth="225.0" styleClass="generalLeftButton">
+               <children>
+                  <Label alignment="CENTER" layoutX="-1.0" prefHeight="50.0" prefWidth="227.0" text="MANAGE" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Sans Demibold" size="15.0" />
+                     </font>
+                  </Label>
+                  <MaterialIconView fill="WHITE" glyphName="SETTINGS" layoutX="20.0" layoutY="35.0" size="20" />
+               </children>
+            </Pane>
+            <Pane layoutX="32.0" layoutY="334.0" onMouseClicked="#handleStream" prefHeight="50.0" prefWidth="225.0" styleClass="generalLeftButton">
+               <children>
+                  <Label alignment="CENTER" layoutX="-1.0" prefHeight="50.0" prefWidth="227.0" text="STREAM" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Sans Demibold" size="15.0" />
+                     </font>
+                  </Label>
+                  <MaterialIconView fill="WHITE" glyphName="OPEN_IN_BROWSER" layoutX="20.0" layoutY="35.0" size="20" />
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </left>
+</BorderPane>
