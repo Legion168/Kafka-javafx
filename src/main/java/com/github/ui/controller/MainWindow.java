@@ -17,12 +17,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
+import reactor.core.Disposable;
 
 @Slf4j
 @FxmlView
 @Component
 public class MainWindow implements Initializable {
-	private final MainService service;
 	private final ConsumerWindow consumerWindow;
 
 	@FXML
@@ -33,22 +33,18 @@ public class MainWindow implements Initializable {
 
 	@Override
 	public void initialize(final URL url, final ResourceBundle resourceBundle) {
-		Try.run(this::handleConsumer).onFailure(ex -> log.error("****** [Error opening Dashboard: {0}]", ex));
+		Try.run(this::handleConsumer).onFailure(ex -> log.error("****** [Error opening Conumser&Producer: {0}]", ex));
 	}
 
 	@FXML
 	private void handleExit() {
+		consumerWindow.disposeConsumers();
 		System.exit(0);
 	}
 
 	@FXML
-	private void handleDashboard() {
-		titleSection.setText("Dashboard");
-	}
-
-	@FXML
 	private void handleConsumer() {
-		titleSection.setText("Consumer");
+		titleSection.setText("Consumer & Producer");
 
 		final StackPane pane;
 
@@ -64,31 +60,10 @@ public class MainWindow implements Initializable {
 
 		pane = (StackPane) root;
 
-		mainPane.setRight(pane);
+		mainPane.setCenter(pane);
 	}
 
-	@FXML
-	private void handleProducer() {
-		titleSection.setText("Producer");
-	}
-
-	@FXML
-	private void handleClient() {
-		titleSection.setText("Client");
-	}
-
-	@FXML
-	private void handleManage() {
-		titleSection.setText("Manage");
-	}
-
-	@FXML
-	private void handleStream() {
-		titleSection.setText("Stream");
-	}
-
-	public MainWindow(MainService service, ConsumerWindow consumerWindow) {
-		this.service = service;
+	public MainWindow(final ConsumerWindow consumerWindow) {
 		this.consumerWindow = consumerWindow;
 	}
 }

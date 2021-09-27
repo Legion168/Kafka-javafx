@@ -1,28 +1,27 @@
 package com.github.ui.controller.consumer;
 
-import static javafx.collections.FXCollections.observableArrayList;
+import static com.github.common.Constant.TOPIC_BITCOIN;
+import static com.github.common.Constant.TOPIC_SPORT;
+import static com.github.ui.controller.consumer.model.StatusProducer.STARTED;
+import static com.github.ui.controller.consumer.model.StatusProducer.STOPPED;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 
-import javafx.scene.chart.BarChart;
 import org.springframework.stereotype.Component;
 
-import com.github.client.model.Topic;
+import com.github.ui.controller.consumer.model.ConsumerModel;
+import com.github.ui.controller.consumer.model.StatusProducer;
+import com.github.ui.controller.consumer.model.TableSubscriber;
+import com.github.ui.controller.consumer.model.Topic;
+import com.github.ui.controller.consumer.service.ConsumerService;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXRadioButton;
 
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.StackedBarChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +33,6 @@ import net.rgielen.fxweaver.core.FxmlView;
 public class ConsumerWindow implements Initializable {
 	private final ConsumerService service;
 	private final ConsumerModel model;
-	private final ToggleGroup tg;
-
-	private Boolean started = false;
 
 	@FXML
 	private Label consumedMessages;
@@ -45,83 +41,62 @@ public class ConsumerWindow implements Initializable {
 	@FXML
 	private Label sportMessages;
 	@FXML
-	private JFXRadioButton bitcoin;
-	@FXML
-	private JFXRadioButton sport;
-	@FXML
-	private JFXRadioButton all;
-	@FXML
 	private JFXButton startBtn;
 	@FXML
 	private BarChart<String, Integer> table;
 
-	@FXML
 	private void runConsumer(final ActionEvent event) {
-		if (!started) {
-			startBtn.setText("Stop");
-			started = true;
-			service.runProducer();
+		final StatusProducer actualStatus = model.getStatus();
+		final StatusProducer nextStatus;
+
+		if (STOPPED.equals(actualStatus)) {
+			nextStatus = STARTED;
+			service.startProducer();
 		} else {
-			startBtn.setText("Start");
-			started = false;
-			service.stopConsumer();
+			nextStatus = STOPPED;
+			service.stopProducer();
 		}
+
+		startBtn.setText(nextStatus.getTextButton());
+		model.setStatus(nextStatus);
+	}
+
+	public void disposeConsumers() {
+		model.getTopics().values().forEach(d -> {
+			log.info("****** [Dispose topic {}]", d.getTopicName());
+			d.getDisposable().dispose();
+		});
 	}
 
 	@Override
 	public void initialize(final URL url, final ResourceBundle resourceBundle) {
-		final TableSubscriber subscriber = new TableSubscriber();
+		final Topic topicBitcoin = model.getTopics().get(TOPIC_BITCOIN);
+		final Topic topicSport = model.getTopics().get(TOPIC_SPORT);
 
-		final ObservableList<XYChart.Series<String, Integer>> data = observableArrayList();
+		final TableSubscriber subscriberBitcoin = new TableSubscriber(topicBitcoin, service);
+		final TableSubscriber subscriberSport = new TableSubscriber(topicSport, service);
+
 		final StringConverter<Number> converter = new NumberStringConverter();
 
-		data.add(subscriber.getSeries());
-		table.setData(data);
+		model.getData().add(subscriberBitcoin.getSeries());
+		model.getData().add(subscriberSport.getSeries());
+		table.setData(model.getData());
 
 		startBtn.setOnAction(this::runConsumer);
 
-		bitcoinMessages.textProperty().bindBidirectional(model.getBitcoin(), converter);
+		model.getTot().bind(topicBitcoin.getCount().add(topicSport.getCount()));
+
+		bitcoinMessages.textProperty().bindBidirectional(topicBitcoin.getCount(), converter);
 		consumedMessages.textProperty().bindBidirectional(model.getTot(), converter);
-		sportMessages.textProperty().bindBidirectional(model.getSport(), converter);
+		sportMessages.textProperty().bindBidirectional(topicSport.getCount(), converter);
 
 		consumedMessages.textProperty().addListener((s, oldVal, newVal) -> consumedMessages.setText(newVal));
 		bitcoinMessages.textProperty().addListener((s, oldVal, newVal) -> bitcoinMessages.setText(newVal));
 		sportMessages.textProperty().addListener((s, oldVal, newVal) -> sportMessages.setText(newVal));
-
-		bitcoin.setToggleGroup(tg);
-		sport.setToggleGroup(tg);
-		all.setToggleGroup(tg);
-
-		table.getXAxis().setTickLabelFill(Color.WHITE);
 	}
 
 	public ConsumerWindow(final ConsumerService service) {
 		this.service = service;
 		this.model = new ConsumerModel();
-		this.tg = new ToggleGroup();
-	}
-
-	private class TableSubscriber implements Consumer<Topic> {
-		private final ObservableList<XYChart.Data<String, Integer>> seriesData = observableArrayList();
-		private final XYChart.Series<String, Integer> series;
-
-		public XYChart.Series<String, Integer> getSeries() {
-			return series;
-		}
-
-		private TableSubscriber() {
-			series = new XYChart.Series<>("", seriesData);
-			service.runConsumer(model).subscribe(this);
-		}
-
-		@Override
-		public void accept(final Topic topic) {
-			Platform.runLater(() -> {
-				if ("bitcoin".equalsIgnoreCase(topic.getTopic()))
-					seriesData.add(new XYChart.Data<>(topic.getTopic(), model.getBitcoin().intValue()));
-				else
-					seriesData.add(new XYChart.Data<>(topic.getTopic(), model.getSport().intValue()));
-			});
-		}
 	}
 }

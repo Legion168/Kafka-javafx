@@ -9,8 +9,7 @@ import java.util.Properties;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.stereotype.Service;
 
-import com.github.client.model.Topic;
-import com.github.ui.controller.consumer.ConsumerModel;
+import com.github.ui.controller.consumer.model.Topic;
 
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
@@ -22,33 +21,22 @@ import reactor.kafka.receiver.ReceiverRecord;
 @Slf4j
 @Service
 public class ConsumerTwitterService {
-	public Flux<Topic> run(final ConsumerModel model) {
-		log.info("****** [Consumer STARTED]");
-
-		final String topic = "twitter_tweets";
+	public Flux<Topic> run(final Topic topic) {
+		log.info("****** [Consumer {} STARTED]", topic.getTopicName());
 
 		final ReceiverOptions<String, String> options = receiverOptions()
-				.subscription(Collections.singleton(topic))
+				.subscription(Collections.singleton(topic.getTopicName()))
 				.addAssignListener(partitions -> log.debug("onPartitionsAssigned {}", partitions))
 				.addRevokeListener(partitions -> log.debug("onPartitionsRevoked {}", partitions));
 
 		final Flux<ReceiverRecord<String, String>> messages = Flux.defer(() -> {
-			KafkaReceiver<String, String> receiver = KafkaReceiver.create(options);
+			final KafkaReceiver<String, String> receiver = KafkaReceiver.create(options);
 			return receiver.receive();
 		});
 
-		return messages.index().doOnNext(tp -> Platform.runLater(() -> {
-			model.getTot().setValue(tp.getT1() + 1);
-
-			if ("bitcoin".equalsIgnoreCase(tp.getT2().key())) {
-				model.getBitcoin().setValue(model.getBitcoin().get() + 1);
-			} else {
-				model.getSport().setValue(model.getSport().get() + 1);
-			}
-		}))
-				.map(tp -> "bitcoin".equalsIgnoreCase(tp.getT2().key())
-						? Topic.builder().topic("Bitcoin").count(tp.getT1().intValue()).build()
-						: Topic.builder().topic("Sport").count(tp.getT1().intValue()).build());
+		return messages
+				.doOnNext(m -> Platform.runLater(() -> topic.getCount().setValue(topic.getCount().getValue() + 1)))
+				.map(msg -> topic);
 	}
 
 	private ReceiverOptions<String, String> receiverOptions() {

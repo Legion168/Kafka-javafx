@@ -7,13 +7,13 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import com.google.gson.JsonParser;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.stereotype.Service;
 
 import com.github.client.configuration.ClientTwitter;
+import com.google.gson.JsonParser;
 import com.twitter.hbc.core.Client;
 
 import io.vavr.control.Try;
@@ -30,7 +30,7 @@ import reactor.kafka.sender.SenderRecord;
 public class ProducerTwitterService {
 	private final ClientTwitter twitterClient;
 	private final BlockingQueue<String> msgQueue = new LinkedBlockingQueue<>(1000);
-	private static JsonParser jsonParser = new JsonParser();
+	private final JsonParser jsonParser = new JsonParser();
 	private Disposable disposable;
 	private Client client;
 
@@ -68,7 +68,7 @@ public class ProducerTwitterService {
 				.filter(s -> !s.isEmpty())
 				.map(msg -> {
 					final String key = isBitcoin(msg) ? "bitcoin" : "sport";
-					return SenderRecord.create(new ProducerRecord<>("twitter_tweets", key, msg), count);
+					return SenderRecord.create(new ProducerRecord<>("twitter_" + key, null, msg), count);
 				});
 	}
 
@@ -97,6 +97,6 @@ public class ProducerTwitterService {
 	}
 
 	private Boolean isBitcoin(final String value) {
-		return jsonParser.parse(value).getAsJsonObject().get("text").getAsString().toLowerCase().contains("#bitcoin");
+		return jsonParser.parse(value).toString().toLowerCase().contains("#bitcoin");
 	}
 }

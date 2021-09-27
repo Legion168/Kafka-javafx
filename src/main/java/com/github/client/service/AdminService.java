@@ -28,9 +28,7 @@ public class AdminService {
 
             KafkaFuture<Void> future = result.values().get(topicName);
             future.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }

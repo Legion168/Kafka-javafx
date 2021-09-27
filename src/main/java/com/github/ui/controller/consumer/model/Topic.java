@@ -1,4 +1,4 @@
-package com.github.ui.controller.consumer;
+package com.github.ui.controller.consumer.model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -6,18 +6,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import reactor.core.Disposable;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsumerModel {
-    @Builder.Default
-    private IntegerProperty tot = new SimpleIntegerProperty(0);
+public class Topic {
+    private String topicName;
+
+    private String showedName;
 
     @Builder.Default
-    private IntegerProperty bitcoin = new SimpleIntegerProperty(0);
+    private IntegerProperty count = new SimpleIntegerProperty(0);
 
     @Builder.Default
-    private IntegerProperty sport = new SimpleIntegerProperty(0);
+    private Disposable disposable = null;
 }

@@ -22,6 +22,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
     public void onApplicationEvent(final StageReadyEvent event) {
         final Stage stage = event.stage;
         stage.setTitle("Kafka Application");
+
         final Scene scene = new Scene(fxWeaver.loadView(MainWindow.class));
         stage.setScene(scene);
 
