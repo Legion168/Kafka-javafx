@@ -1,8 +1,5 @@
 package com.github.ui.controller.consumer.model;
 
-import static com.github.common.Constant.TOPIC_BITCOIN;
-import static com.github.common.Constant.TOPIC_SPORT;
-
 import java.util.Map;
 
 import javafx.beans.property.IntegerProperty;
@@ -14,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import static com.github.common.Constant.*;
 
 @Data
 @Builder
@@ -33,6 +32,8 @@ public class ConsumerModel {
 	private Map<String, Topic> topics = Map
 			.of( //
 					TOPIC_BITCOIN, Topic.builder().topicName(TOPIC_BITCOIN).showedName("#Bitcoin").build(), //
-					TOPIC_SPORT, Topic.builder().topicName(TOPIC_SPORT).showedName("#Sport").build() //
+					TOPIC_SPORT, Topic.builder().topicName(TOPIC_SPORT).showedName("#Sport").build(), //
+					TOPIC_ALIEN, Topic.builder().topicName(TOPIC_ALIEN).showedName("#Alien").build(), //
+					TOPIC_PIZZA, Topic.builder().topicName(TOPIC_PIZZA).showedName("#Pizza").build() //
 			);
 }

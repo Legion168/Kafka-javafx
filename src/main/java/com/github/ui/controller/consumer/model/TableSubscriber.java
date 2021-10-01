@@ -10,7 +10,6 @@ import com.github.ui.controller.consumer.service.ConsumerService;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Tooltip;
 import reactor.core.Disposable;
 
 public class TableSubscriber implements Consumer<Topic> {
@@ -30,12 +29,6 @@ public class TableSubscriber implements Consumer<Topic> {
 
 	@Override
 	public void accept(final Topic topic) {
-		Platform.runLater(() -> {
-			seriesData.add(new Data<>(topic.getShowedName(), topic.getCount().intValue()));
-			seriesData
-					.forEach(d -> d
-							.getNode()
-							.setOnMouseEntered(e -> Tooltip.install(d.getNode(), new Tooltip(topic.getShowedName()))));
-		});
+		Platform.runLater(() -> seriesData.add(new Data<>(topic.getShowedName(), topic.getCount().intValue())));
 	}
 }

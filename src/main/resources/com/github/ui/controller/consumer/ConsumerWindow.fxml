@@ -21,17 +21,16 @@
          <children>
             <AnchorPane layoutX="31.0" layoutY="185.0" prefHeight="426.0" prefWidth="391.0" styleClass="paneLeft">
                <children>
-                  <Label alignment="CENTER" layoutX="38.0" layoutY="8.0" prefHeight="40.0" prefWidth="316.0" styleClass="upperLabel" text="Result" textAlignment="CENTER" wrapText="true" />
                   <JFXButton fx:id="startBtn" buttonType="RAISED" layoutX="149.0" layoutY="358.0" prefHeight="40.0" prefWidth="88.0" styleClass="sendButton" text="Start" textFill="WHITE">
                      <font>
                         <Font name="Lucida Sans Demibold" size="15.0" />
                      </font>
                   </JFXButton>
-                  <Pane layoutX="30.0" layoutY="102.0" prefHeight="223.0" prefWidth="326.0" styleClass="paneLeftInside">
+                  <Pane layoutX="30.0" layoutY="24.0" prefHeight="301.0" prefWidth="326.0" styleClass="paneLeftInside">
                      <children>
                         <Label alignment="CENTER" layoutX="99.0" layoutY="14.0" prefHeight="30.0" prefWidth="128.0" styleClass="upperLabelDown" text="Information" />
                         <Separator layoutX="13.0" layoutY="54.0" prefHeight="8.0" prefWidth="300.0" />
-                        <GridPane alignment="CENTER" layoutX="12.0" layoutY="84.0" prefHeight="106.0" prefWidth="302.0">
+                        <GridPane alignment="CENTER" layoutX="12.0" layoutY="84.0" prefHeight="199.0" prefWidth="302.0">
                            <columnConstraints>
                               <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="233.6" minWidth="10.0" prefWidth="209.6" />
                               <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="40.79999999999998" />
@@ -41,22 +40,29 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
                               <MaterialDesignIconView fill="WHITE" glyphName="FORMAT_LIST_NUMBERS" size="20" GridPane.columnIndex="2" />
-                              <MaterialDesignIconView fill="WHITE" glyphName="CHECK" size="20" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <MaterialDesignIconView fill="WHITE" glyphName="CLOSE" size="20" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <MaterialDesignIconView fill="WHITE" glyphName="WALLET" size="20" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <MaterialDesignIconView fill="WHITE" glyphName="FOOTBALL" size="20" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <Label id="labelInfo" fx:id="consumedMessages" alignment="CENTER" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="66.0" text="0" GridPane.columnIndex="1" />
                               <Label id="labelInfo" fx:id="bitcoinMessages" alignment="CENTER" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="66.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label id="labelInfo" fx:id="sportMessages" alignment="CENTER" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="66.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label contentDisplay="RIGHT" prefHeight="20.0" prefWidth="181.0" text="Consumed" />
                               <Label contentDisplay="RIGHT" prefHeight="20.0" prefWidth="181.0" text="Bitcoin" GridPane.rowIndex="1" />
                               <Label contentDisplay="RIGHT" prefHeight="20.0" prefWidth="181.0" text="Sport" GridPane.rowIndex="2" />
+                              <Label contentDisplay="RIGHT" prefHeight="20.0" prefWidth="181.0" text="Alien" GridPane.rowIndex="3" />
+                              <Label contentDisplay="RIGHT" prefHeight="20.0" prefWidth="181.0" text="Pizza" GridPane.rowIndex="4" />
+                              <Label id="labelInfo" fx:id="alienMessages" alignment="CENTER" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="66.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label id="labelInfo" fx:id="pizzaMessages" alignment="CENTER" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="66.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <MaterialDesignIconView fill="WHITE" glyphName="" size="20" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <MaterialDesignIconView fill="WHITE" glyphName="PIZZA" size="20" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
                   </Pane>
-                  <Separator layoutX="17.0" layoutY="44.0" prefHeight="8.0" prefWidth="352.0" />
                </children>
             </AnchorPane>
             <Pane layoutX="492.0" layoutY="126.0" prefHeight="544.0" prefWidth="518.0" styleClass="paneInfo">
@@ -66,9 +72,9 @@
                         <Font name="Lucida Sans Demibold" size="16.0" />
                      </font>
                   </Label>
-                  <BarChart fx:id="table" barGap="10.0" horizontalZeroLineVisible="false" layoutY="97.0" legendVisible="false" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+                  <BarChart fx:id="table" animated="false" barGap="10.0" horizontalZeroLineVisible="false" layoutY="97.0" legendVisible="false" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
                     <xAxis>
-                      <CategoryAxis label="Topic" side="BOTTOM" tickLabelFill="WHITE" tickLabelGap="0.0" tickLabelsVisible="false" tickLength="5.0" tickMarkVisible="false" />
+                      <CategoryAxis label="Topic" side="BOTTOM" tickLabelFill="WHITE" tickLabelGap="0.0" tickLength="5.0" />
                     </xAxis>
                     <yAxis>
                       <NumberAxis label="Messages" minorTickCount="1" minorTickLength="1.0" side="LEFT" tickLabelFill="WHITE" tickLabelGap="0.0" tickUnit="1.0" />

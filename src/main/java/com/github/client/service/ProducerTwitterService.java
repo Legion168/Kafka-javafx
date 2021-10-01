@@ -1,7 +1,9 @@
 package com.github.client.service;
 
-import static com.github.common.Constant.BOOTSTRAP_SERVER;
+import static com.github.common.Constant.*;
+import static io.vavr.API.*;
 
+import java.time.Duration;
 import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -44,7 +46,7 @@ public class ProducerTwitterService {
 		final KafkaSender<String, String> sender = createKafkaProducer();
 
 		final Flux<SenderRecord<String, String, Integer>> flux = Flux
-				.range(1, 10)
+				.interval(Duration.ofNanos(1))
 				.flatMap(this::createProducerRecord)
 				.doOnError(ex -> {
 					ex.printStackTrace();
@@ -61,15 +63,24 @@ public class ProducerTwitterService {
 		}).onSuccess(e -> log.info("****** [Producer CLOSED]")).getOrNull();
 	}
 
-	private Mono<SenderRecord<String, String, Integer>> createProducerRecord(final Integer count) {
+	private Mono<SenderRecord<String, String, Integer>> createProducerRecord(final Long count) {
 		return Mono
 				.just(client)
 				.map(c -> Try.of(() -> msgQueue.poll(5, TimeUnit.SECONDS)).getOrElse(""))
 				.filter(s -> !s.isEmpty())
-				.map(msg -> {
-					final String key = isBitcoin(msg) ? "bitcoin" : "sport";
-					return SenderRecord.create(new ProducerRecord<>("twitter_" + key, null, msg), count);
-				});
+				.map(this::checkTopic)
+				.map(p -> SenderRecord.create(p, count.intValue()));
+	}
+
+	private ProducerRecord<String, String> checkTopic(final String msg) {
+		final String m = jsonToString(msg);
+
+		return Match(true).of( //
+				Case($(m.contains("bitcoin")), f -> new ProducerRecord<>(TOPIC_BITCOIN, null, msg)),
+				Case($(m.contains("sport")), f -> new ProducerRecord<>(TOPIC_SPORT, null, msg)),
+				Case($(m.contains("pizza")), f -> new ProducerRecord<>(TOPIC_PIZZA, null, msg)),
+				Case($(m.contains("alien")), f -> new ProducerRecord<>(TOPIC_ALIEN, null, msg))
+		);
 	}
 
 	private KafkaSender<String, String> createKafkaProducer() {
@@ -96,7 +107,7 @@ public class ProducerTwitterService {
 		this.twitterClient = twitterClient;
 	}
 
-	private Boolean isBitcoin(final String value) {
-		return jsonParser.parse(value).toString().toLowerCase().contains("#bitcoin");
+	private String jsonToString(final String value) {
+		return jsonParser.parse(value).toString().toLowerCase();
 	}
 }

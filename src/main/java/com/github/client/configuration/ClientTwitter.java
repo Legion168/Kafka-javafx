@@ -30,7 +30,7 @@ public class ClientTwitter {
 	@Value("${twitter.secret}")
 	private String secret;
 
-	private final List<String> terms = List.of("bitcoin", "sport");
+	private final List<String> terms = List.of("bitcoin", "sport", "pizza", "alien");
 
 	public Client createClient(final BlockingQueue<String> msgQueue) {
 		final Hosts host = new HttpHosts(Constants.STREAM_HOST);
